@@ -8,9 +8,11 @@ int main(int argc, char** argv)
 
   mutable_transform_publisher::MutableTransformPublisher pub (nh);
 
-  geometry_msgs::Transform tf;
-  tf.rotation.w = 1.0;
-  pub.add("foo","bar", ros::Duration(1.0), tf);
+  geometry_msgs::TransformStamped tf;
+  tf.header.frame_id = "foo";
+  tf.child_frame_id = "bar";
+  tf.transform.rotation.w = 1;
+  pub.add(tf, ros::Duration(1.0));
 
   ros::spin();
 }

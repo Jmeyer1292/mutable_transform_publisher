@@ -15,8 +15,7 @@ class MutableTransformPublisher
 public:
   MutableTransformPublisher(ros::NodeHandle& nh);
 
-  void add(const std::string& source, const std::string& target,
-           ros::Duration period, const geometry_msgs::Transform& initial_tf);
+  void add(const geometry_msgs::TransformStamped& transform, ros::Duration period);
 
 private:
   bool setTransformCallback(SetTransformRequest& req, SetTransformResponse& res);
@@ -24,6 +23,8 @@ private:
   Publisher* findPublisher(const std::string& source, const std::string& target) const;
 
   std::string makeKey(const std::string& source, const std::string& target) const;
+
+  bool validate(const geometry_msgs::TransformStamped& t) const;
 
   tf2_ros::TransformBroadcaster broadcaster_;
   ros::ServiceServer set_transform_server_;
