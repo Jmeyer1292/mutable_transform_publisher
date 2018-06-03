@@ -16,7 +16,7 @@ public:
 
   geometry_msgs::TransformStamped setTransform(const geometry_msgs::Transform& t);
 
-  geometry_msgs::Transform getTransform() const;
+  geometry_msgs::TransformStamped getTransform() const;
 
 private:
   void onPublishTimeout(const ros::TimerEvent& e);

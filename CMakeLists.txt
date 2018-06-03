@@ -22,7 +22,8 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES
-    mutable_transform_publisher
+    ${PROJECT_NAME}
+    ${PROJECT_NAME}_yaml
   CATKIN_DEPENDS
     tf2
     tf2_ros
@@ -39,6 +40,8 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+
+# Core ROS capability
 add_library(${PROJECT_NAME}
   src/${PROJECT_NAME}/publisher.cpp
   src/${PROJECT_NAME}/mutable_transform_publisher.cpp
@@ -48,19 +51,30 @@ add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EX
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
+# Yaml Stuff
+add_library(${PROJECT_NAME}_yaml
+  src/${PROJECT_NAME}/yaml_serialization.cpp
+)
+
+add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+
+
+# Primary Node
 add_executable(${PROJECT_NAME}_node src/mutable_transform_publisher_node.cpp)
 
 set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME mutable_transform_pub PREFIX "")
 
 add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(${PROJECT_NAME}_node ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME}_node ${PROJECT_NAME} ${PROJECT_NAME}_yaml)
 
 #############
 ## Install ##
 #############
 
-install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
+install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_yaml ${PROJECT_NAME}_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

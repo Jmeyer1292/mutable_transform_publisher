@@ -30,6 +30,19 @@ bool mutable_transform_publisher::MutableTransformPublisher::add(const geometry_
   return r.second;
 }
 
+std::vector<geometry_msgs::TransformStamped>
+mutable_transform_publisher::MutableTransformPublisher::getAllTransforms() const
+{
+  std::vector<geometry_msgs::TransformStamped> result;
+  result.reserve(pub_map_.size());
+
+  for (const auto& k : pub_map_)
+  {
+    result.push_back(k.second->getTransform());
+  }
+  return result;
+}
+
 bool mutable_transform_publisher::MutableTransformPublisher::setTransformCallback(SetTransformRequest& req,
                                                                                   SetTransformResponse& res)
 {

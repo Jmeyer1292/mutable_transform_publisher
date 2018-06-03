@@ -17,6 +17,8 @@ public:
 
   bool add(const geometry_msgs::TransformStamped& transform, ros::Duration period);
 
+  std::vector<geometry_msgs::TransformStamped> getAllTransforms() const;
+
 private:
   bool setTransformCallback(SetTransformRequest& req, SetTransformResponse& res);
 

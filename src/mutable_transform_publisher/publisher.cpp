@@ -23,9 +23,9 @@ geometry_msgs::TransformStamped mutable_transform_publisher::Publisher::setTrans
   return copy;
 }
 
-geometry_msgs::Transform mutable_transform_publisher::Publisher::getTransform() const
+geometry_msgs::TransformStamped mutable_transform_publisher::Publisher::getTransform() const
 {
-  return tf_.transform;
+  return tf_;
 }
 
 void mutable_transform_publisher::Publisher::onPublishTimeout(const ros::TimerEvent& e)
