@@ -34,7 +34,7 @@ catkin_package(
     geometry_msgs
     message_runtime
    DEPENDS
-    yaml-cpp
+    YAML_CPP
 )
 
 ###########
