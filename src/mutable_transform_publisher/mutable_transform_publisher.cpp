@@ -24,7 +24,7 @@ void mutable_transform_publisher::MutableTransformPublisher::add(const geometry_
   const auto target = transform.child_frame_id;
   const auto key = makeKey(source, target);
   std::unique_ptr<Publisher> pub (new Publisher(source, target, period, transform.transform, broadcaster_));
-//  auto it = pub_map_.emplace(key, std::move(pub));
+  auto it = pub_map_.emplace(key, std::move(pub));
 }
 
 bool mutable_transform_publisher::MutableTransformPublisher::setTransformCallback(SetTransformRequest& req,
