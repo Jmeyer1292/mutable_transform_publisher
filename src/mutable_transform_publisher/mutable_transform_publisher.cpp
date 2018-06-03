@@ -1,5 +1,7 @@
 #include "mutable_transform_publisher/mutable_transform_publisher.h"
 
+static const ros::Duration default_period (1.0);
+
 static bool isNormalized(const geometry_msgs::Quaternion& q, const double eps = 1e-6)
 {
   const auto sum = q.w + q.x + q.y + q.z;
@@ -40,7 +42,7 @@ bool mutable_transform_publisher::MutableTransformPublisher::setTransformCallbac
   else
   {
     res.was_replaced = false;
-    add(req.transform, ros::Duration(1.0));
+    add(req.transform, default_period);
   }
 
   return true;
