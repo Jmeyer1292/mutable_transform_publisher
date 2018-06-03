@@ -1,7 +1,6 @@
 #ifndef MTP_YAML_SERIALIZATION_H
 #define MTP_YAML_SERIALIZATION_H
 
-#include <yaml-cpp/yaml.h>
 #include <geometry_msgs/TransformStamped.h>
 
 namespace mutable_transform_publisher

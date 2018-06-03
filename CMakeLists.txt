@@ -9,6 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
 )
 
+find_package(yaml-cpp REQUIRED)
+
 add_service_files(
   FILES
   SetTransform.srv
@@ -20,7 +22,9 @@ generate_messages(
 )
 
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS
+    include
+    ${YAML_CPP_INCLUDE_DIRS}
   LIBRARIES
     ${PROJECT_NAME}
     ${PROJECT_NAME}_yaml
@@ -29,6 +33,8 @@ catkin_package(
     tf2_ros
     geometry_msgs
     message_runtime
+   DEPENDS
+    yaml-cpp
 )
 
 ###########
@@ -38,6 +44,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${YAML_CPP_INCLUDE_DIRS}
 )
 
 
@@ -58,7 +65,7 @@ add_library(${PROJECT_NAME}_yaml
 
 add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${YAML_CPP_LIBRARIES})
 
 
 # Primary Node
