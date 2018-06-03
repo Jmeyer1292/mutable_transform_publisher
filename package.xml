@@ -2,9 +2,13 @@
 <package format="2">
   <name>mutable_transform_publisher</name>
   <version>0.1.0</version>
-  <description>The mutable_transform_publisher package</description>
+  <description>
+    A ROS Node in the spirit of tf's static_transform_publisher but with a service to set the transform
+    while running and the ability to persist changes if desired.
+  </description>
 
-  <maintainer email="jon@todo.todo">jon</maintainer>
+  <author email="jmeyer1292@gmail.com">Jon Meyer</author>
+  <maintainer email="jmeyer1292@gmail.com">Jon Meyer</maintainer>
 
   <license>Apache 2.0</license>
 
