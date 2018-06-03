@@ -16,7 +16,18 @@ mutable_transform_publisher::Publisher::Publisher(const std::string& source, con
   pub_timer_ = nh.createTimer(period, &Publisher::onPublishTimeout, this);
 }
 
-void mutable_transform_publisher::Publisher::onPublishTimeout(const ros::TimerEvent&)
+void mutable_transform_publisher::Publisher::setTransform(const geometry_msgs::Transform& t)
 {
+  tf_.transform = t;
+}
+
+geometry_msgs::Transform mutable_transform_publisher::Publisher::getTransform() const
+{
+  return tf_.transform;
+}
+
+void mutable_transform_publisher::Publisher::onPublishTimeout(const ros::TimerEvent& e)
+{
+  tf_.header.stamp = e.current_real;
   broadcaster_.sendTransform(tf_);
 }

@@ -4,8 +4,9 @@
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "mutable_tf_publisher", ros::init_options::AnonymousName);
+  ros::NodeHandle nh;
 
-  mutable_transform_publisher::MutableTransformPublisher pub;
+  mutable_transform_publisher::MutableTransformPublisher pub (nh);
 
   geometry_msgs::Transform tf;
   tf.rotation.w = 1.0;

@@ -14,6 +14,10 @@ public:
   Publisher(const std::string& source, const std::string& target, ros::Duration period,
             const geometry_msgs::Transform& init_tf, tf2_ros::TransformBroadcaster& broadcaster);
 
+  void setTransform(const geometry_msgs::Transform& t);
+
+  geometry_msgs::Transform getTransform() const;
+
 private:
   void onPublishTimeout(const ros::TimerEvent& e);
 
