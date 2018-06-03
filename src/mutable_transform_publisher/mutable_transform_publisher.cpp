@@ -34,11 +34,7 @@ bool mutable_transform_publisher::MutableTransformPublisher::setTransformCallbac
   if (pub)
   {
     res.was_replaced = true;
-    res.old_transform.header.frame_id = req.transform.header.frame_id;
-    res.old_transform.header.stamp = ros::Time::now();
-    res.old_transform.child_frame_id = req.transform.child_frame_id;
-    res.old_transform.transform = pub->getTransform();
-    pub->setTransform(req.transform.transform);
+    res.old_transform = pub->setTransform(req.transform.transform);
   }
   else
   {

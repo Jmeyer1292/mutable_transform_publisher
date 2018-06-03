@@ -16,9 +16,11 @@ mutable_transform_publisher::Publisher::Publisher(const std::string& source, con
   pub_timer_ = nh.createTimer(period, &Publisher::onPublishTimeout, this);
 }
 
-void mutable_transform_publisher::Publisher::setTransform(const geometry_msgs::Transform& t)
+geometry_msgs::TransformStamped mutable_transform_publisher::Publisher::setTransform(const geometry_msgs::Transform& t)
 {
+  const auto copy = tf_;
   tf_.transform = t;
+  return copy;
 }
 
 geometry_msgs::Transform mutable_transform_publisher::Publisher::getTransform() const
