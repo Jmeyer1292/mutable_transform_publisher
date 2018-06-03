@@ -11,20 +11,21 @@ mutable_transform_publisher::MutableTransformPublisher::MutableTransformPublishe
   set_transform_server_ = nh.advertiseService("set_transform", &MutableTransformPublisher::setTransformCallback, this);
 }
 
-void mutable_transform_publisher::MutableTransformPublisher::add(const geometry_msgs::TransformStamped& transform,
+bool mutable_transform_publisher::MutableTransformPublisher::add(const geometry_msgs::TransformStamped& transform,
                                                                  ros::Duration period)
 {
   if (!validate(transform))
   {
     ROS_WARN_STREAM("Transform push rejected: " << transform);
-    return;
+    return false;
   }
 
   const auto& source = transform.header.frame_id;
   const auto target = transform.child_frame_id;
   const auto key = makeKey(source, target);
   std::unique_ptr<Publisher> pub (new Publisher(source, target, period, transform.transform, broadcaster_));
-  auto it = pub_map_.emplace(key, std::move(pub));
+  const auto r = pub_map_.emplace(key, std::move(pub));
+  return r.second;
 }
 
 bool mutable_transform_publisher::MutableTransformPublisher::setTransformCallback(SetTransformRequest& req,

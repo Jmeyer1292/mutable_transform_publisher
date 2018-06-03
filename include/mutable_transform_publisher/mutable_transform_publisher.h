@@ -15,7 +15,7 @@ class MutableTransformPublisher
 public:
   MutableTransformPublisher(ros::NodeHandle& nh);
 
-  void add(const geometry_msgs::TransformStamped& transform, ros::Duration period);
+  bool add(const geometry_msgs::TransformStamped& transform, ros::Duration period);
 
 private:
   bool setTransformCallback(SetTransformRequest& req, SetTransformResponse& res);
