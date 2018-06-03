@@ -1,0 +1,8 @@
+# Request
+geometry_msgs/TransformStamped transform
+
+---
+# Response
+bool was_replaced
+geometry_msgs/TransformStamped old_transform
+
