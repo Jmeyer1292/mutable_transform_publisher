@@ -4,8 +4,8 @@ static const ros::Duration default_period (1.0);
 
 static bool isNormalized(const geometry_msgs::Quaternion& q, const double eps = 1e-6)
 {
-  const auto sum = q.w + q.x + q.y + q.z;
-  return std::abs(1.0 - sum) < eps;
+  const auto sum_sq = sqrt(pow(q.w, 2) + pow(q.x, 2) + pow(q.y, 2) + pow(q.z, 2));
+  return std::abs(1.0 - sum_sq) < eps;
 }
 
 mutable_transform_publisher::MutableTransformPublisher::MutableTransformPublisher(ros::NodeHandle& nh)
