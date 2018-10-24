@@ -6,6 +6,7 @@
 #include "mutable_transform_publisher/SetTransform.h"
 
 #include <memory>
+#include <math.h>
 
 namespace mutable_transform_publisher
 {
