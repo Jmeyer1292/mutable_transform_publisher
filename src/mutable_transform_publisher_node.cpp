@@ -3,7 +3,8 @@
 #include "mutable_transform_publisher/yaml_serialization.h"
 
 bool loadAndAddPublishers(const std::string& yaml_path,
-                          mutable_transform_publisher::MutableTransformPublisher& pub)
+                          mutable_transform_publisher::MutableTransformPublisher& pub,
+                          const double period)
 {
   std::vector<geometry_msgs::TransformStamped> tfs;
   if (!mutable_transform_publisher::deserialize(yaml_path, tfs))
@@ -14,7 +15,7 @@ bool loadAndAddPublishers(const std::string& yaml_path,
 
   for (const auto& t : tfs)
   {
-    if (!pub.add(t, ros::Duration(1.0)))
+    if (!pub.add(t, ros::Duration(period)))
     {
       ROS_ERROR_STREAM("Unable to add transform");
       return false;
@@ -42,16 +43,17 @@ int main(int argc, char** argv)
   ros::NodeHandle nh, pnh ("~");
 
   std::string yaml_path;
+  double period;
   const bool yaml_specified = pnh.getParam("yaml_path", yaml_path);
-
   const bool commit = pnh.param<bool>("commit", true);
+  const bool period_specified = pnh.param<double>("period", period, 1.0);
 
   // Create the publisher
   mutable_transform_publisher::MutableTransformPublisher pub (nh);
 
-  if (yaml_specified)
+  if (yaml_specified && period_specified)
   {
-    if (!loadAndAddPublishers(yaml_path, pub)) return 1;
+    if (!loadAndAddPublishers(yaml_path, pub, period)) return 1;
   }
 
   ros::spin();
