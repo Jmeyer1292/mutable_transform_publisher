@@ -46,12 +46,12 @@ int main(int argc, char** argv)
   double period;
   const bool yaml_specified = pnh.getParam("yaml_path", yaml_path);
   const bool commit = pnh.param<bool>("commit", true);
-  const bool period_specified = pnh.param<double>("period", period, 1.0);
+  pnh.param<double>("period", period, 1.0);
 
   // Create the publisher
   mutable_transform_publisher::MutableTransformPublisher pub (nh);
 
-  if (yaml_specified && period_specified)
+  if (yaml_specified)
   {
     if (!loadAndAddPublishers(yaml_path, pub, period)) return 1;
   }
